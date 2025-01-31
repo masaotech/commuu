@@ -405,6 +405,7 @@ class HabitItemController extends Controller
                 // スケジュール最終更新日の更新
                 $habitItem->habit_schedules_updated_at = $today->format('Y-m-d');
                 $habitItem->save();
+                DB::commit();
             } catch (\Exception $e) {
                 DB::rollback();
                 return Redirect::route('group.index')
