@@ -1,0 +1,157 @@
+@startuml commumane
+' ========= 図の生成方法 ===========================
+' 1. VSCode の拡張機能 PlantUML をインストール
+' 2. 本ファイルを VSCode で開く
+' 3. Alt + d 押下
+' ==================================================
+
+/' テーブル種別のタグカラー '/
+!define MASTER_MARK_COLOR AAFFAA
+!define TRANSACTION_MARK_COLOR FFAA00
+
+package "Commuu ER図" as commuu_db <<Database>> {
+    ' ==========================================
+    ' テーブル定義
+    ' ==========================================
+    entity "groups" as groups <<M,MASTER_MARK_COLOR>> {
+        グループ
+        --
+        id <color: Gray>グループID <color: Red>[PK]
+        name <color: Gray>グループ名
+        created_at <color: Gray>登録日時
+        updated_at <color: Gray>更新日時
+    }
+
+    entity "users" as users <<M,MASTER_MARK_COLOR>> {
+        ユーザー
+        --
+        id <color: Gray>ユーザーID <color: Red>[PK]
+        name <color: Gray>ユーザー名
+        email <color: Gray>メールアドレス <color: Green>[UK]
+        email_verified_at <color: Gray>メールアドレス検証日時
+        password <color: Gray>パスワード
+        current_group_id <color: Gray>現在のグループID <color: Blue>[FK]
+        remember_token <color: Gray>パスワード再発行トークン
+        created_at <color: Gray>登録日時
+        updated_at <color: Gray>更新日時
+    }
+
+    entity "password_reset_tokens" as password_reset_tokens <<T,TRANSACTION_MARK_COLOR>> {
+        パスワード再設定トークン
+        --
+        email <color: Gray>メールアドレス <color: Red>[PK]
+        token <color: Gray>パスワード再発行トークン
+        created_at <color: Gray>登録日時
+    }
+
+    entity "sessions" as sessions <<T,TRANSACTION_MARK_COLOR>> {
+        セッション
+        --
+        id <color: Gray>セッションID <color: Red>[PK]
+        user_id <color: Gray>ユーザーID <color: Blue>[FK]
+        ip_address <color: Gray>アクセス元IPアドレス
+        user_agent <color: Gray>ユーザーエージェント
+        payload <color: Gray>ペイロード
+        last_activity <color: Gray>最終アクセス日時(UNIX時間)
+    }
+
+    entity "user_roles" as user_roles <<M,MASTER_MARK_COLOR>> {
+        ユーザー権限
+        --
+        id <color: Gray>ユーザー権限ID <color: Red>[PK]
+        name <color: Gray>ユーザー権限名
+        created_at <color: Gray>登録日時
+        updated_at <color: Gray>更新日時
+    }
+
+    entity "group_user" as group_user <<M,MASTER_MARK_COLOR>> {
+        グループユーザー[中間]
+        --
+        id <color: Gray>グループユーザーID <color: Red>[PK]
+        group_id <color: Gray>グループID <color: Blue>[FK]
+        user_id <color: Gray>ユーザーID <color: Blue>[FK]
+        user_role_id <color: Gray>ユーザー権限ID <color: Blue>[FK]
+        created_at <color: Gray>登録日時
+        updated_at <color: Gray>更新日時
+    }
+
+    entity "shopping_items" as shopping_items <<T,TRANSACTION_MARK_COLOR>> {
+        買い物リスト
+        --
+        id <color: Gray>商品ID <color: Red>[PK]
+        name <color: Gray>商品名
+        group_id <color: Gray>グループID <color: Blue>[FK]
+        item_category_id <color: Gray>商品カテゴリID
+        item_status_code_id <color: Gray>商品ステータスID
+        created_at <color: Gray>登録日時
+        updated_at <color: Gray>更新日時
+    }
+
+    entity "habit_cycles" as habit_cycles <<M,MASTER_MARK_COLOR>> {
+        習慣サイクル
+        --
+        id <color: Gray>習慣周期ID <color: Red>[PK]
+        cycle_type <color: Gray>基準周期(monthly/weekly/daily)
+        name <color: Gray>習慣周期名
+        created_at <color: Gray>登録日時
+        updated_at <color: Gray>更新日時
+    }
+
+    entity "habit_items" as habit_items <<T,TRANSACTION_MARK_COLOR>> {
+        習慣項目リスト
+        --
+        id <color: Gray>習慣項目ID <color: Red>[PK]
+        name <color: Gray>習慣項目名
+        group_id <color: Gray>グループID <color: Blue>[FK]
+        habit_cycle_id <color: Gray>習慣周期ID <color: Blue>[FK]
+        monthly_start_day <color: Gray>月次開始日(1～28)
+        weekly_day_of_week <color: Gray>週次実施曜日(134, 06 等)
+        daily_start_date <color: Gray>日次開始日(yyyy/mm/dd)
+        habit_schedules_updated_at <color: Gray>スケジュール更新日(yyyy/mm/dd)
+        created_at <color: Gray>登録日時
+        updated_at <color: Gray>更新日時
+    }
+
+    entity "habit_schedules" as habit_schedules <<T,TRANSACTION_MARK_COLOR>> {
+        習慣スケジュール
+        --
+        id <color: Gray>習慣スケジュールID <color: Red>[PK]
+        habit_item_id <color: Gray>習慣項目ID <color: Blue>[FK]
+        scheduled_date <color: Gray>予定日(yyyy/mm/dd)
+        isComplete <color: Gray>完了フラグ
+        created_at <color: Gray>登録日時
+        updated_at <color: Gray>更新日時
+    }
+
+    entity "declutter_items" as declutter_items <<T,TRANSACTION_MARK_COLOR>> {
+        断捨離アイテム
+        --
+        id <color: Gray>アイテムID <color: Red>[PK]
+        name <color: Gray>アイテム名
+        group_id <color: Gray>グループID <color: Blue>[FK]
+        disposal_confirm_at <color: Gray>処分確認日(yyyy/mm/dd)
+        created_at <color: Gray>登録日時
+        updated_at <color: Gray>更新日時
+    }
+
+    ' ==========================================
+    ' リレーションシップ
+    ' ==========================================
+    ' Type	 記号
+    ' ====== ======
+    ' 0か1   |o--
+    ' 1のみ  ||--
+    ' 0以上  }o--
+    ' 1以上  }|--
+    groups ||..o{ users
+    groups ||.left.o{ group_user
+    groups ||.up.o{ shopping_items
+    groups ||.right.o{ habit_items
+    habit_cycles ||..o{ habit_items
+    habit_items ||.down.o{ habit_schedules
+    users ||.left.o{ sessions
+    users ||.up.o{ group_user
+    user_roles ||.right.o{ group_user
+
+}
+@enduml
