@@ -147,6 +147,7 @@ package "Commuu ER図" as commuu_db <<Database>> {
     groups ||.left.o{ group_user
     groups ||.up.o{ shopping_items
     groups ||.right.o{ habit_items
+    groups ||.up.o{ declutter_items
     habit_cycles ||..o{ habit_items
     habit_items ||.down.o{ habit_schedules
     users ||.left.o{ sessions
