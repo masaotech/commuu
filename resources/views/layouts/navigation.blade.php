@@ -17,6 +17,7 @@
                     @php
                         $isActiveShopping = request()->routeIs('shoppingitem.index') || request()->routeIs('shoppingitem.edit');
                         $isActiveHabit = request()->routeIs('habititem.index') || request()->routeIs('habititem.edit');
+                        $isActiveDeclutter = request()->routeIs('declutter.index');
                     @endphp
                     <x-nav-link :href="route('shoppingitem.index')" :active="$isActiveShopping">
                         @include('icon.shopping-icon')
@@ -25,6 +26,10 @@
                     <x-nav-link :href="route('habititem.index')" :active="$isActiveHabit">
                         @include('icon.habit-todo-icon')
                         <span class="ms-2">定期To-Do</span>
+                    </x-nav-link>
+                    <x-nav-link :href="route('declutter.index')" :active="$isActiveDeclutter">
+                        @include('icon.declutter-icon')
+                        <span class="ms-2">断捨離サポート</span>
                     </x-nav-link>
                 </div>
             </div>

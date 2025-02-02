@@ -3,6 +3,7 @@
         @php
             $isActiveShopping = request()->routeIs('shoppingitem.index') || request()->routeIs('shoppingitem.edit');
             $isActiveHabit = request()->routeIs('habititem.index') || request()->routeIs('habititem.edit');
+            $isActiveDeclutter = request()->routeIs('declutter.index');
         @endphp
         <div class="flex-grow">
             <x-footer-link :href="route('shoppingitem.index')" :active="$isActiveShopping">
@@ -10,10 +11,16 @@
                 <span class="ms-2">買い物リスト</span>
             </x-footer-link>
         </div>
-        <div class="flex-grow">
-            <x-footer-link :href="route('habititem.index')" :active="$isActiveHabit" style="margin-left: 1px">
+        <div class="flex-grow ms-1">
+            <x-footer-link :href="route('habititem.index')" :active="$isActiveHabit">
                 @include('icon.habit-todo-icon')
                 <span class="ms-2">定期To-Do</span>
+            </x-footer-link>
+        </div>
+        <div class="flex-grow ms-1">
+            <x-footer-link :href="route('declutter.index')" :active="$isActiveDeclutter">
+                @include('icon.declutter-icon')
+                <span class="ms-2">断捨離サポート</span>
             </x-footer-link>
         </div>
     </div>

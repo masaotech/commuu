@@ -9,6 +9,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/shopping.js',
                 'resources/js/habit.js',
+                'resources/js/declutter.js',
             ],
             refresh: true,
         }),

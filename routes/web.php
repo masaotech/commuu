@@ -5,12 +5,13 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ShoppingItemController;
 use App\Http\Controllers\HabitItemController;
+use App\Http\Controllers\DeclutterItemController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [RouteController::class, 'rootUrl'])->name('rootUrl');
 
-// 基本はこちら（auth と emptygroup）
-Route::group(['middleware' => ['auth', 'emptygroup']], routes: function () {
+// 基本はこちら（auth と verified と emptygroup）
+Route::group(['middleware' => ['auth', 'verified', 'emptygroup']], routes: function () {
     // アカウント管理 関連
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -34,18 +35,22 @@ Route::group(['middleware' => ['auth', 'emptygroup']], routes: function () {
     Route::post('/shoppingitem/changeItemStatus', [ShoppingItemController::class, 'changeItemStatus'])->name('shoppingitem.changeItemStatus');
     Route::post('/shoppingitem/updateItemInfo', [ShoppingItemController::class, 'updateItemInfo'])->name('shoppingitem.updateItemInfo');
     Route::post('/shoppingitem/deleteItemInfo', [ShoppingItemController::class, 'deleteItemInfo'])->name('shoppingitem.deleteItemInfo');
-    
-    
+
     // 定例To-Doアプリ 関連
     Route::get('/habititem', [HabitItemController::class, 'index'])->name('habititem.index');
     Route::get('/habititem/edit', [HabitItemController::class, 'edit'])->name('habititem.edit');
     Route::post('/habititem/store', [HabitItemController::class, 'store'])->name('habititem.store');
     Route::post('/habititem/update', [HabitItemController::class, 'update'])->name('habititem.update');
     Route::post('/habititem/destroy', [HabitItemController::class, 'destroy'])->name('habititem.destroy');
+
+    // 断捨離アプリ 関連
+    Route::get('/declutter', [DeclutterItemController::class, 'index'])->name('declutter.index');
+    Route::post('/declutter/store', [DeclutterItemController::class, 'store'])->name('declutter.store');
+    Route::post('/declutter/destroy', [DeclutterItemController::class, 'destroy'])->name('declutter.destroy');
 });
 
 // 一部はこちら（auth のみ）
-Route::group(['middleware' => ['auth']], routes: function () {
+Route::group(['middleware' => ['auth', 'verified']], routes: function () {
     // グループ管理 関連
     Route::get('/group/create', [GroupController::class, 'create'])->name('group.create');
     Route::post('/group', [GroupController::class, 'store'])->name('group.store');

@@ -127,9 +127,10 @@ package "Commuu ER図" as commuu_db <<Database>> {
         断捨離アイテム
         --
         id <color: Gray>アイテムID <color: Red>[PK]
-        name <color: Gray>アイテム名
         group_id <color: Gray>グループID <color: Blue>[FK]
+        image_base64 <color: Gray>画像ファイル(base64)
         disposal_confirm_at <color: Gray>処分確認日(yyyy/mm/dd)
+        note <color: Gray>メモ欄
         created_at <color: Gray>登録日時
         updated_at <color: Gray>更新日時
     }
