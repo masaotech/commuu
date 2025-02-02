@@ -33,7 +33,10 @@ Homestead.json
 /public/build
 /storage/pail
 /storage/debugbar/*
+/storage/tempImages/
 .env.backup
 .env.production
 .phpactor.json
 auth.json
+bootstrap/cache/.gitignore
+storage/debugbar/.gitignore
