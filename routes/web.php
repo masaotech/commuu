@@ -14,14 +14,8 @@ Route::get('/terms-of-use', [RouteController::class, 'termsOfUse'])->name('terms
 
 // 基本はこちら（auth と verified と emptygroup）
 Route::group(['middleware' => ['auth', 'verified', 'emptygroup']], routes: function () {
-    // アカウント管理 関連
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
     // グループ管理 関連
     Route::get('/group', [GroupController::class, 'index'])->name('group.index');
-    Route::get('/group/create', [GroupController::class, 'create'])->name('group.create');
     Route::patch('/group/{group}', [GroupController::class, 'update'])->name('group.update');
     Route::delete('/group/{group}', [GroupController::class, 'destroy'])->name('group.destroy');
     Route::get('/group/{group}/edit', [GroupController::class, 'edit'])->name('group.edit');
@@ -51,8 +45,13 @@ Route::group(['middleware' => ['auth', 'verified', 'emptygroup']], routes: funct
     Route::post('/declutter/destroy', [DeclutterItemController::class, 'destroy'])->name('declutter.destroy');
 });
 
-// 一部はこちら（auth のみ）
+// 一部はこちら（auth と verified）
 Route::group(['middleware' => ['auth', 'verified']], routes: function () {
+    // アカウント管理 関連
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     // グループ管理 関連
     Route::get('/group/create', [GroupController::class, 'create'])->name('group.create');
     Route::post('/group', [GroupController::class, 'store'])->name('group.store');
