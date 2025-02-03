@@ -67,19 +67,62 @@ document.querySelectorAll('input[type=checkbox].target').forEach(function (eleme
 let element_disp_checked_only = document.getElementById('disp_checked_only');
 if (element_disp_checked_only) {
     element_disp_checked_only.addEventListener('change', function (disp_checked_only) {
+        // 「検索ボックス」のクリア
+        document.getElementById('search_box').value = '';
+
         if (disp_checked_only.target.checked) {
             //チェック ON に change した時の処理
             Array.from(document.getElementsByClassName('target_item')).forEach(function (item_element) {
                 if (item_element.firstElementChild.checked == false) {
                     item_element.classList.add('hidden');
+                } else {
+                    item_element.classList.remove('hidden');
                 }
             });
         } else {
             //チェック OFF に change した時の処理
+            // アイテムの再表示
             Array.from(document.getElementsByClassName('target_item')).forEach(function (item_element) {
                 item_element.classList.remove('hidden');
             });
         }
+    });
+}
+
+// 「検索ボックス」の値変更時
+let element_search_box = document.getElementById('search_box');
+if (element_search_box) {
+    element_search_box.addEventListener('input', function (e) {
+        // 「購入対象のみ表示する」をOFFに
+        document.getElementById('disp_checked_only').checked = false;
+
+        // 全アイテムを対象に、検索文字列に一致する商品のみ表示する
+        const search_string = e.target.value;
+        Array.from(document.getElementsByClassName('target_item')).forEach(function (item_element) {
+            const item_name = item_element.innerText;
+            if (item_name.match(search_string)) {
+                item_element.classList.remove('hidden');
+            } else {
+                item_element.classList.add('hidden');
+            }
+        });
+    });
+}
+
+// 「クリア」ボタン押下時
+let element_clear_search_box = document.getElementById('clear_search_box');
+if (element_clear_search_box) {
+    element_clear_search_box.addEventListener('click', function () {
+        // 「購入対象のみ表示する」をOFFに
+        document.getElementById('disp_checked_only').checked = false;
+
+        // 「検索ボックス」のクリア
+        document.getElementById('search_box').value = '';
+
+        // アイテムの再表示
+        Array.from(document.getElementsByClassName('target_item')).forEach(function (item_element) {
+            item_element.classList.remove('hidden');
+        });
     });
 }
 

@@ -25,7 +25,7 @@
                 {{-- <div class="flex items-center gap-4"> --}}
                 <div class="grid grid-cols-1 lg:grid-cols-2 items-center gap-4 md:gap-6">
                     {{-- 商品名 --}}
-                    <x-text-input id="name" name="name" type="text" class="brock w-full" placeholder="商品名"
+                    <x-text-input id="name" name="name" type="text" class="brock w-full" placeholder="新規登録 商品名"
                         autofocus required maxlength="255" />
                     <input type="hidden" id="user_current_group_id" name="user_current_group_id"
                         value="{{ $userCurrentGroupId }}" />
@@ -78,16 +78,22 @@
             </form>
         </div>
 
-        {{-- 購入対象のみ表示 --}}
-        <div class="pt-4 pb-2 px-4 sm:px-12 bg-white shadow rounded-lg">
-            <div>
-                <label class="inline-flex items-center cursor-pointer">
-                    <input type="checkbox" id="disp_checked_only" value="" class="sr-only peer">
-                    <div
-                        class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500">
-                    </div>
-                    <span class="ms-3 text-sm">購入対象のみ表示する</span>
-                </label>
+        {{-- 購入対象のみ表示＆検索ボックス --}}
+        <div class="p-4 sm:px-12 bg-white shadow rounded-lg">
+            <div class="grid grid-cols-1 sm:grid-cols-2 items-center gap-4 md:gap-6">
+                <div class="flex items-center">
+                    <label class="cursor-pointer">
+                        <input type="checkbox" id="disp_checked_only" value="" class="sr-only peer">
+                        <div
+                            class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500">
+                        </div>
+                    </label>
+                    <span class="ms-2">購入対象のみ表示する</span>
+                </div>
+                <div class="sm:flex sm:justify-end sm:gap-2">
+                    <x-text-input id="search_box" placeholder="絞り込み 検索" />
+                    <x-primary-button type="button" id="clear_search_box">クリア</x-primary-button>
+                </div>
             </div>
         </div>
 
