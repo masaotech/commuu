@@ -35,6 +35,21 @@ class GroupMiddleware
                 ->with('flash-message-error', '表示対象のグループが設定されていません。リストから選択してください');
         }
 
+        // ログインユーザーの現在のグループが所属グループか確認（この条件に当てはまることは無い想定）
+        $isNotGroupMember = true;
+        foreach ($userRegisteredGroups as $userRegisteredGroup) {
+            if ($user->current_group_id === $userRegisteredGroup->group_id) {
+                $isNotGroupMember = false;
+            }
+        }
+        if ($isNotGroupMember) {
+            // グループメンバーではない場合
+            $user->current_group_id = null;
+            $user->save();
+            return Redirect::route('group.pickOutGroup')
+                ->with('flash-message-error', '表示対象のグループが設定されていません。リストから選択してください');
+        }
+
         return $next($request);
     }
 }
