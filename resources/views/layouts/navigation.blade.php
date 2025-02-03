@@ -19,17 +19,17 @@
                         $isActiveHabit = request()->routeIs('habititem.index') || request()->routeIs('habititem.edit');
                         $isActiveDeclutter = request()->routeIs('declutter.index');
                     @endphp
-                    <x-nav-link :href="route('shoppingitem.index')" :active="$isActiveShopping">
+                    <x-nav-link :href="route('shoppingitem.index')" :active="$isActiveShopping" class="max-md:px-4">
                         @include('icon.shopping-icon')
-                        <span class="ms-2">買い物リスト</span>
+                        <span class="ms-2 max-md:hidden">買い物リスト</span>
                     </x-nav-link>
-                    <x-nav-link :href="route('habititem.index')" :active="$isActiveHabit">
+                    <x-nav-link :href="route('habititem.index')" :active="$isActiveHabit" class="max-md:px-4">
                         @include('icon.habit-todo-icon')
-                        <span class="ms-2">定期To-Do</span>
+                        <span class="ms-2 max-md:hidden">定期To-Do</span>
                     </x-nav-link>
-                    <x-nav-link :href="route('declutter.index')" :active="$isActiveDeclutter">
+                    <x-nav-link :href="route('declutter.index')" :active="$isActiveDeclutter" class="max-md:px-4">
                         @include('icon.declutter-icon')
-                        <span class="ms-2">断捨離サポート</span>
+                        <span class="ms-2 max-md:hidden">断捨離サポート</span>
                     </x-nav-link>
                 </div>
             </div>
