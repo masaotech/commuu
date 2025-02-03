@@ -19,4 +19,20 @@ class RouteController extends Controller
             return Redirect::route('login');
         }
     }
+
+    /**
+     * プライバシーポリシー
+     */
+    public function privacyPolicy()
+    {
+        return view('document/privacy-policy');
+    }
+
+    /**
+     * 利用規約
+     */
+    public function termsOfUse()
+    {
+        return view('document/terms-of-use');
+    }
 }

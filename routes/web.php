@@ -9,6 +9,8 @@ use App\Http\Controllers\DeclutterItemController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [RouteController::class, 'rootUrl'])->name('rootUrl');
+Route::get('/privacy-policy', [RouteController::class, 'privacyPolicy'])->name('privacyPolicy');
+Route::get('/terms-of-use', [RouteController::class, 'termsOfUse'])->name('termsOfUse');
 
 // 基本はこちら（auth と verified と emptygroup）
 Route::group(['middleware' => ['auth', 'verified', 'emptygroup']], routes: function () {

@@ -56,4 +56,14 @@
             @endif
         </div>
     </form>
+    <div class="flex justify-end">
+        <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            href="{{ route('termsOfUse') }}">
+            利用規約
+        </a>
+        <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ms-3"
+            href="{{ route('privacyPolicy') }}">
+            プライバシーポリシー
+        </a>
+    </div>
 </x-guest-layout>
