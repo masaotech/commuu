@@ -1,6 +1,4 @@
 <x-app-layout>
-    @include('layouts.dropdown-registered-group')
-
     <x-slot name="header">
         グループ管理
     </x-slot>
