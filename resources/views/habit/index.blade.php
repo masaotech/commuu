@@ -175,14 +175,6 @@
                                                     <x-primary-button> 済にする </x-primary-button>
                                                 </form>
                                             @endif
-
-
-
-
-
-
-
-
                                         </div>
                                     </td>
                                 </tr>
