@@ -9,7 +9,7 @@
     </x-slot>
 
     {{-- 設定画面へリンク --}}
-    <x-slot name="settingLink">
+    <x-slot name="headerLink">
         <a href="{{ route('shoppingitem.edit') }}">
             @include('icon.setting-icon')
         </a>
@@ -107,17 +107,17 @@
 
                         // カラー判定
                         $isGreen = $item->item_category_id == ShoppingItemCategoriesConst::COLOR_1_ID;
-                        $isOrange = $item->item_category_id == ShoppingItemCategoriesConst::COLOR_2_ID;
+                        $isPurple = $item->item_category_id == ShoppingItemCategoriesConst::COLOR_2_ID;
                         $isBlue = $item->item_category_id == ShoppingItemCategoriesConst::COLOR_3_ID;
                         $isRed = $item->item_category_id == ShoppingItemCategoriesConst::COLOR_4_ID;
-                        $isPurple = $item->item_category_id == ShoppingItemCategoriesConst::COLOR_5_ID;
+                        $isOrange = $item->item_category_id == ShoppingItemCategoriesConst::COLOR_5_ID;
 
                         // チェック＆カラー判定
                         $isCheckedGreen = $isGreen && $isChecked;
-                        $isCheckedOrange = $isOrange && $isChecked;
+                        $isCheckedPurple = $isPurple && $isChecked;
                         $isCheckedBlue = $isBlue && $isChecked;
                         $isCheckedRed = $isRed && $isChecked;
-                        $isCheckedPurple = $isPurple && $isChecked;
+                        $isCheckedOrange = $isOrange && $isChecked;
 
                         $newBlock =
                             '</div>' .
@@ -149,16 +149,16 @@
                         'border-4',
                         // ボーダー色
                         'border-green-200' => $isGreen,
-                        'border-orange-200' => $isOrange,
+                        'border-purple-200' => $isPurple,
                         'border-blue-200' => $isBlue,
                         'border-red-200' => $isRed,
-                        'border-purple-200' => $isPurple,
+                        'border-orange-200' => $isOrange,
                         // 背景色
                         'bg-green-100' => $isCheckedGreen,
-                        'bg-orange-100' => $isCheckedOrange,
+                        'bg-purple-100' => $isCheckedPurple,
                         'bg-blue-100' => $isCheckedBlue,
                         'bg-red-100' => $isCheckedRed,
-                        'bg-purple-100' => $isCheckedPurple,
+                        'bg-orange-100' => $isCheckedOrange,
                     ])>
                         <input id="item_id_{{ $item->id }}" type="checkbox" value="{{ $item->id }}"
                             class="target hidden {{ ShoppingItemCategoriesConst::SHOPPING_ITEM_COLOR_LIST[$item->item_category_id] }}"
