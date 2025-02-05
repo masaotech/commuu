@@ -23,10 +23,7 @@
                                     <td class="px-2 py-4">
                                         {{ $groupUser->userRole->name }}</td>
                                     <td class="px-2 py-4">
-                                        <a href="{{ route('group.edit', ['group' => $groupUser->group_id]) }}"
-                                            class="inline-flex items-center justify-center rounded-md border-transparent bg-gray-500 font-medium px-4 py-2 mx-3 text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900">
-                                            設定
-                                        </a>
+                                        <x-primary-link-button :href="route('group.edit', ['group' => $groupUser->group_id])">設定</x-primary-link-button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -35,10 +32,7 @@
                 </div>
 
                 <div class="mt-6">
-                    <a href="{{ route('group.create') }}"
-                        class="inline-flex items-center justify-center rounded-md border-transparent bg-gray-500 text-sm font-medium px-4 py-2 mx-3 text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900">
-                        新規登録
-                    </a>
+                    <x-primary-link-button :href="route('group.create')">グループ新規登録</x-primary-link-button>
                 </div>
 
             </div>
