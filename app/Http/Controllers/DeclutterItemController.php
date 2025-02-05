@@ -66,6 +66,9 @@ class DeclutterItemController extends Controller
      */
     private function resizeImage($srcFilename, $dstWidth = 480, $dstHight = 480)
     {
+        // EXIF 情報から元の画像を回転
+        $this->rotateImageBasedOnExif($srcFilename->getPathname());
+
         // 正方形にトリミングする値をセット
         list($srcWidth, $srcHight) = getimagesize($srcFilename); // 元の画像名を指定してサイズを取得
         if ($srcWidth === $srcHight) {
@@ -141,6 +144,91 @@ class DeclutterItemController extends Controller
             default:
                 break;
         }
+
+        // メモリ解放
+        imagedestroy($srcImage);
+        imagedestroy($dstImage);
+
         return $resizedFilePath;
+    }
+
+    /**
+     * [private] 画像の回転
+     */
+    private function rotateImageBasedOnExif($imageFilePath)
+    {
+
+        // 画像のEXIF情報を取得
+        $exif = @exif_read_data($imageFilePath, 'IFD0');
+
+        // EXIF情報に向き情報が存在する場合は、画像回転
+        if ($exif || isset($exif['Orientation'])) {
+
+            // 画像タイプ取得
+            $fileType = exif_imagetype($imageFilePath);
+
+            // 画像を読み込む
+            switch ($fileType) {
+                case IMAGETYPE_GIF:
+                    $srcImage = imagecreatefromgif($imageFilePath);
+                    break;
+                case IMAGETYPE_JPEG:
+                    $srcImage = imagecreatefromjpeg($imageFilePath);
+                    break;
+                case IMAGETYPE_PNG:
+                    $srcImage = imagecreatefrompng($imageFilePath);
+                    break;
+                case IMAGETYPE_BMP:
+                    $srcImage = imagecreatefrombmp($imageFilePath);
+                    break;
+                case IMAGETYPE_TIFF_II:
+                    break;
+                case IMAGETYPE_TIFF_MM:
+                    break;
+                default:
+                    break;
+            }
+
+            // 回転
+            switch ($exif['Orientation']) {
+                case 3:
+                    // 180度回転
+                    $srcImage = imagerotate($srcImage, 180, 0);
+                    break;
+                case 6:
+                    // 90度時計回り
+                    $srcImage = imagerotate($srcImage, -90, 0);
+                    break;
+                case 8:
+                    // 90度反時計回り
+                    $srcImage = imagerotate($srcImage, 90, 0);
+                    break;
+            }
+
+            // 画像保存
+            switch ($fileType) {
+                case IMAGETYPE_GIF:
+                    imagegif($srcImage, $imageFilePath);
+                    break;
+                case IMAGETYPE_JPEG:
+                    imagejpeg($srcImage, $imageFilePath);
+                    break;
+                case IMAGETYPE_PNG:
+                    imagepng($srcImage, $imageFilePath);
+                    break;
+                case IMAGETYPE_BMP:
+                    imagebmp($srcImage, $imageFilePath);
+                    break;
+                case IMAGETYPE_TIFF_II:
+                    break;
+                case IMAGETYPE_TIFF_MM:
+                    break;
+                default:
+                    break;
+            }
+
+            // メモリ解放
+            imagedestroy($srcImage);
+        }
     }
 }
