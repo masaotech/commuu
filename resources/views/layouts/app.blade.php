@@ -29,12 +29,12 @@
         {{-- ヘッダー --}}
         @isset($header)
             <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-3 px-8 sm:px-12 lg:ps-20 lg:pe-24 flex justify-between">
+                <div class="max-w-7xl mx-auto py-3 px-8 sm:px-12 lg:ps-20 lg:pe-24 flex justify-between items-center">
                     <h2 class="font-semibold text-xl text-gray-700 leading-tight">
                         {{ $header }}
                     </h2>
-                    @isset($settingLink)
-                        {{ $settingLink }}
+                    @isset($headerLink)
+                        {{ $headerLink }}
                     @endisset
                 </div>
             </header>
