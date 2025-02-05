@@ -119,18 +119,48 @@
                                     {{-- ボタン --}}
                                     <td>
                                         <div class="flex justify-end items-center me-3">
-                                            <x-primary-button x-data=""
-                                                x-on:click.prevent="$dispatch('open-modal', 'confirm-habititem-deletion-{{ $schedule->schedule_id }}')">
-                                                @if ($schedule->isComplete)
+                                            @if ($schedule->isComplete)
+                                                {{-- 実施済 ⇒ 未実施 に変更 --}}
+                                                <x-primary-button x-data=""
+                                                    x-on:click.prevent="$dispatch('open-modal', 'confirm-habititem-deletion-{{ $schedule->schedule_id }}')">
                                                     とりけす
-                                                @else
-                                                    済にする
-                                                @endif
-                                            </x-primary-button>
-                                            <x-modal name="confirm-habititem-deletion-{{ $schedule->schedule_id }}"
-                                                focusable>
-                                                <form method="post" action="{{ route('habititem.update') }}"
-                                                    class="p-6">
+                                                </x-primary-button>
+                                                <x-modal name="confirm-habititem-deletion-{{ $schedule->schedule_id }}"
+                                                    focusable>
+                                                    <form method="post" action="{{ route('habititem.update') }}"
+                                                        class="p-6">
+                                                        @csrf
+                                                        <input type="hidden" name="schedule_id"
+                                                            value={{ $schedule->schedule_id }} />
+                                                        <input type="hidden" name="is_complete"
+                                                            value={{ $schedule->isComplete }} />
+                                                        <input type="hidden" name="to_do_name"
+                                                            value={{ $schedule->name }} />
+                                                        <input type="hidden" name="schedule_date"
+                                                            value="{{ $scheduled_date }}({{ $day }})" />
+                                                        <input type="hidden" name="group_id"
+                                                            value={{ $schedule->group_id }} />
+                                                        <h2 class="text-lg text-gray-900">
+                                                            {{ $scheduled_date }}
+                                                            (<span
+                                                                @class(['text-blue-600' => $isSaturday, 'text-red-600' => $isSunday])>{{ $day }}</span>)
+                                                            実施分の「{{ $schedule->name }}」を<br>
+                                                            <span class="font-medium"> 「未実施」 </span>
+                                                            に変更します
+                                                        </h2>
+                                                        <div class="mt-6 flex justify-end">
+                                                            <x-secondary-button x-on:click="$dispatch('close')">
+                                                                キャンセル
+                                                            </x-secondary-button>
+                                                            <x-primary-button class="ms-3">
+                                                                OK
+                                                            </x-primary-button>
+                                                        </div>
+                                                    </form>
+                                                </x-modal>
+                                            @else
+                                                {{-- 未実施 ⇒ 実施済 に変更 --}}
+                                                <form method="post" action="{{ route('habititem.update') }}">
                                                     @csrf
                                                     <input type="hidden" name="schedule_id"
                                                         value={{ $schedule->schedule_id }} />
@@ -142,29 +172,17 @@
                                                         value="{{ $scheduled_date }}({{ $day }})" />
                                                     <input type="hidden" name="group_id"
                                                         value={{ $schedule->group_id }} />
-                                                    <h2 class="text-lg text-gray-900">
-                                                        {{ $scheduled_date }}
-                                                        (<span @class(['text-blue-600' => $isSaturday, 'text-red-600' => $isSunday])>{{ $day }}</span>)
-                                                        実施分の「{{ $schedule->name }}」を<br>
-                                                        <span class="font-medium">
-                                                            @if ($schedule->isComplete)
-                                                                「未実施」
-                                                            @else
-                                                                「実施済」
-                                                            @endif
-                                                        </span>
-                                                        に変更します
-                                                    </h2>
-                                                    <div class="mt-6 flex justify-end">
-                                                        <x-secondary-button x-on:click="$dispatch('close')">
-                                                            キャンセル
-                                                        </x-secondary-button>
-                                                        <x-primary-button class="ms-3">
-                                                            OK
-                                                        </x-primary-button>
-                                                    </div>
+                                                    <x-primary-button> 済にする </x-primary-button>
                                                 </form>
-                                            </x-modal>
+                                            @endif
+
+
+
+
+
+
+
+
                                         </div>
                                     </td>
                                 </tr>
@@ -200,7 +218,6 @@
     <script>
         var scrollPosition;
         var STORAGE_KEY = "scrollY";
-
 
         function saveScrollPosition() {
             scrollPosition = window.pageYOffset;
