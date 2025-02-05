@@ -8,6 +8,14 @@
         買い物リスト（編集）
     </x-slot>
 
+    {{-- 一覧画面へリンク --}}
+    <x-slot name="headerLink">
+        <a class="text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            href="{{ route('shoppingitem.index') }}">
+            一覧へ戻る
+        </a>
+    </x-slot>
+
     {{-- メイン部分 --}}
     <div class="max-w-7xl mx-auto md:px-2 lg:px-8 pb-6 space-y-6">
 
@@ -79,7 +87,8 @@
                                     ])></label>
                             </div>
                         @endforeach
-                        <x-primary-button id="update_item_{{ $item->id }}" class="update-item">更新</x-primary-button>
+                        <x-primary-button id="update_item_{{ $item->id }}"
+                            class="update-item">更新</x-primary-button>
                         <x-danger-button id="delete_item_{{ $item->id }}" class="delete-item">削除</x-danger-button>
                     </div>
                 @endforeach

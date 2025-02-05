@@ -11,6 +11,14 @@
         定期To-Do（編集）
     </x-slot>
 
+    {{-- 一覧画面へリンク --}}
+    <x-slot name="headerLink">
+        <a class="text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            href="{{ route('habititem.index') }}">
+            一覧へ戻る
+        </a>
+    </x-slot>
+
     {{-- メイン部分 --}}
     <div class="max-w-7xl mx-auto md:px-2 lg:px-8 pb-6 space-y-6">
 
@@ -30,7 +38,7 @@
                         'rounded-t-lg',
                         'border',
                         'border-b-0',
-                        'bg-green-50',
+                        'bg-green-100',
                         'px-4',
                         'py-2',
                         'ml-3',
@@ -42,7 +50,7 @@
                         'rounded-t-lg',
                         'border',
                         'border-b-0',
-                        'bg-red-50',
+                        'bg-purple-100',
                         'px-4',
                         'py-2',
                         'ml-1',
@@ -54,7 +62,7 @@
                         'rounded-t-lg',
                         'border',
                         'border-b-0',
-                        'bg-blue-50',
+                        'bg-blue-100',
                         'px-4',
                         'py-2',
                         'ml-1',
@@ -62,7 +70,7 @@
                 </div>
 
                 {{-- 月単位の入力欄 --}}
-                <div id="monthly_block" class="p-3 bg-green-50 border rounded-lg space-y-3">
+                <div id="monthly_block" class="p-3 bg-green-100 border rounded-lg space-y-3">
                     <div>
                         <x-input-label for="monthly_cycle">サイクル</x-input-label>
                         <x-form-select name="monthly_cycle" id="monthly_cycle" required>
@@ -83,7 +91,7 @@
                 </div>
 
                 {{-- 週単位の入力欄 --}}
-                <div id="weekly_block" class="p-3 bg-red-50 border rounded-lg hidden">
+                <div id="weekly_block" class="p-3 bg-purple-100 border rounded-lg hidden">
                     <x-input-label>実施曜日</x-input-label>
                     <div class="grid sm:grid-cols-7">
                         @foreach ($weekArray as $key => $value)
@@ -104,7 +112,7 @@
                 </div>
 
                 {{-- 日単位の入力欄 --}}
-                <div id="daily_block" class="p-3 bg-blue-50 border rounded-lg space-y-3 hidden">
+                <div id="daily_block" class="p-3 bg-blue-100 border rounded-lg space-y-3 hidden">
                     <div>
                         <x-input-label for="daily_cycle">サイクル</x-input-label>
                         <x-form-select name="daily_cycle" id="daily_cycle" disabled>
