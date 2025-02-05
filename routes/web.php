@@ -16,13 +16,13 @@ Route::get('/terms-of-use', [RouteController::class, 'termsOfUse'])->name('terms
 Route::group(['middleware' => ['auth', 'verified', 'emptygroup']], routes: function () {
     // グループ管理 関連
     Route::get('/group', [GroupController::class, 'index'])->name('group.index');
-    Route::patch('/group/{group}', [GroupController::class, 'update'])->name('group.update');
-    Route::delete('/group/{group}', [GroupController::class, 'destroy'])->name('group.destroy');
+    Route::patch('/group/{group}', [GroupController::class, 'update'])->name('group.update')->middleware('guest-user-reject'); // ゲストユーザー制限
+    Route::delete('/group/{group}', [GroupController::class, 'destroy'])->name('group.destroy')->middleware('guest-user-reject'); // ゲストユーザー制限
     Route::get('/group/{group}/edit', [GroupController::class, 'edit'])->name('group.edit');
-    Route::post('/group/{group}/adduseraccount', [GroupController::class, 'addUserAccount'])->name('group.addUserAccount');
-    Route::patch('/group/{group}/updateUserRole', [GroupController::class, 'updateUserRole'])->name('group.updateUserRole');
-    Route::delete('/group/{group}/destroygroupuser', [GroupController::class, 'destroyGroupUser'])->name('group.destroyGroupUser');
-    Route::delete('/group/{group}/leavegroup', [GroupController::class, 'leaveGroup'])->name('group.leaveGroup');
+    Route::post('/group/{group}/adduseraccount', [GroupController::class, 'addUserAccount'])->name('group.addUserAccount')->middleware('guest-user-reject'); // ゲストユーザー制限
+    Route::patch('/group/{group}/updateUserRole', [GroupController::class, 'updateUserRole'])->name('group.updateUserRole')->middleware('guest-user-reject'); // ゲストユーザー制限
+    Route::delete('/group/{group}/destroygroupuser', [GroupController::class, 'destroyGroupUser'])->name('group.destroyGroupUser')->middleware('guest-user-reject'); // ゲストユーザー制限
+    Route::delete('/group/{group}/leavegroup', [GroupController::class, 'leaveGroup'])->name('group.leaveGroup')->middleware('guest-user-reject'); // ゲストユーザー制限
 
     // 買い物アプリ 関連
     Route::get('/shoppingitem', [ShoppingItemController::class, 'index'])->name('shoppingitem.index');
@@ -49,12 +49,12 @@ Route::group(['middleware' => ['auth', 'verified', 'emptygroup']], routes: funct
 Route::group(['middleware' => ['auth', 'verified']], routes: function () {
     // アカウント管理 関連
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('guest-user-reject'); // ゲストユーザー制限
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy')->middleware('guest-user-reject'); // ゲストユーザー制限
 
     // グループ管理 関連
-    Route::get('/group/create', [GroupController::class, 'create'])->name('group.create');
-    Route::post('/group', [GroupController::class, 'store'])->name('group.store');
+    Route::get('/group/create', [GroupController::class, 'create'])->name('group.create')->middleware('guest-user-reject'); // ゲストユーザー制限
+    Route::post('/group', [GroupController::class, 'store'])->name('group.store')->middleware('guest-user-reject'); // ゲストユーザー制限
     Route::post('/group/changecurrentgroup', [GroupController::class, 'changeCurrentGroup'])->name('group.changeCurrentGroup');
     Route::get('/group/pickoutgroup', [GroupController::class, 'pickOutGroup'])->name('group.pickOutGroup');
 });

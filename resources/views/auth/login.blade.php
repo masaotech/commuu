@@ -56,7 +56,7 @@
             @endif
         </div>
     </form>
-    <div class="flex justify-end">
+    {{-- <div class="flex justify-end">
         <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             href="{{ route('termsOfUse') }}">
             利用規約
@@ -65,5 +65,50 @@
             href="{{ route('privacyPolicy') }}">
             プライバシーポリシー
         </a>
+    </div> --}}
+    <hr class="my-8" />
+    <h2 class="font-bold">ゲストユーザーで試す方はこちら</h2>
+    <div class="flex justify-center gap-2 sm:gap-4 my-4">
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+            <input id="email" class="hidden" type="hidden" name="email" value="guest-a@masaotech.com" required />
+            <input id="password" class="hidden" type="hidden" name="password" value="z/f|tuwUwzP4$F)%#*NJjguXeZpX+JMy"
+                required />
+            <button type="submit"
+                class="text-xs px-2 sm:px-3 py-2 border border-gray-400 bg-gray-100 rounded-md font-bold text-gray-600 hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                ゲストAでログイン</button>
+        </form>
+
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+            <input id="email" class="hidden" type="hidden" name="email" value="guest-b@masaotech.com" required />
+            <input id="password" class="hidden" type="hidden" name="password" value="n$8e/W)vGs9R_jUXdYJG$!t#E*3!~6.+"
+                required />
+            <button type="submit"
+                class="text-xs px-2 sm:px-3 py-2 border border-gray-400 bg-gray-100 rounded-md font-bold text-gray-600 hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                ゲストBでログイン</button>
+        </form>
+
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+            <input id="email" class="hidden" type="hidden" name="email" value="guest-c@masaotech.com" required />
+            <input id="password" class="hidden" type="hidden" name="password" value="g%p77gP|xhdshXJG9cn!jv_u2Q~D|F~C"
+                required />
+            <button type="submit"
+                class="text-xs px-2 sm:px-3 py-2 border border-gray-400 bg-gray-100 rounded-md font-bold text-gray-600 hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                ゲストCでログイン</button>
+        </form>
+    </div>
+    <div class="flex text-xs my-2 text-gray-500">
+        <span class="me-1">※</span>
+        <span>ゲストユーザーのデータは30分毎にデモ用データに初期化しておりますので、ご自由に更新操作をお試しください</span>
+    </div>
+    <div class="flex text-xs my-2 text-gray-500">
+        <span class="me-1">※</span>
+        <span>一部機能を制限しておりますが、本サービスのメイン機能は全てお試し頂けます</span>
+    </div>
+    <div class="flex text-xs my-2 text-gray-500">
+        <span class="me-1">※</span>
+        <span>別のゲストユーザーを試す際は、一度ログアウトするか別のブラウザをご利用ください</span>
     </div>
 </x-guest-layout>

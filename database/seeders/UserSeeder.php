@@ -21,9 +21,41 @@ class UserSeeder extends Seeder
 
         // データ準備
         $users = [
+            // 以下 1, 2, 3 はゲストユーザー用
             [
-                'name' => 'user001',
-                'email' => 'user001@example.com',
+                'id' => 1,
+                'name' => 'ゲストA',
+                'email' => 'guest-a@masaotech.com',
+                'email_verified_at' => new DateTime(),
+                'password' => Hash::make('z/f|tuwUwzP4$F)%#*NJjguXeZpX+JMy'),
+                'current_group_id' => 10,
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
+                'id' => 2,
+                'name' => 'ゲストB',
+                'email' => 'guest-b@masaotech.com',
+                'email_verified_at' => new DateTime(),
+                'password' => Hash::make('n$8e/W)vGs9R_jUXdYJG$!t#E*3!~6.+'),
+                'current_group_id' => 11,
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
+                'id' => 3,
+                'name' => 'ゲストC',
+                'email' => 'guest-c@masaotech.com',
+                'email_verified_at' => new DateTime(),
+                'password' => Hash::make('g%p77gP|xhdshXJG9cn!jv_u2Q~D|F~C'),
+                'current_group_id' => 11,
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
+                'id' => 4,
+                'name' => 'user004',
+                'email' => 'user004@example.com',
                 'email_verified_at' => new DateTime(),
                 'password' => Hash::make('password'),
                 'current_group_id' => 2,
@@ -31,8 +63,9 @@ class UserSeeder extends Seeder
                 'updated_at' => new DateTime(),
             ],
             [
-                'name' => 'user002',
-                'email' => 'user002@example.com',
+                'id' => 5,
+                'name' => 'user005',
+                'email' => 'user005@example.com',
                 'email_verified_at' => new DateTime(),
                 'password' => Hash::make('password'),
                 'current_group_id' => 2,
@@ -40,8 +73,9 @@ class UserSeeder extends Seeder
                 'updated_at' => new DateTime(),
             ],
             [
-                'name' => 'user003',
-                'email' => 'user003@example.com',
+                'id' => 6,
+                'name' => 'user006',
+                'email' => 'user006@example.com',
                 'email_verified_at' => new DateTime(),
                 'password' => Hash::make('password'),
                 'current_group_id' => 3,

@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\GroupMiddleware;
+use App\Http\Middleware\GuestUserRejectMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -14,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'emptygroup' => GroupMiddleware::class,
+            'guest-user-reject' => GuestUserRejectMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

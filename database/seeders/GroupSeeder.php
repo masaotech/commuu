@@ -21,17 +21,33 @@ class GroupSeeder extends Seeder
         // データ準備
         $groups = [
             [
+                'id' => 1,
                 'name' => '岡田Family',
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime(),
             ],
             [
+                'id' => 2,
                 'name' => 'チームパンダ',
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime(),
             ],
             [
+                'id' => 3,
                 'name' => '犬Dog\'s',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            // 以下ゲストユーザー用
+            [
+                'id' => 10,
+                'name' => '家族グループ',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
+                'id' => 11,
+                'name' => 'BBQ仲間',
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime(),
             ],
