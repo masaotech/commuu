@@ -39,6 +39,13 @@ class GroupController extends Controller
      */
     public function create()
     {
+        // 【バリデーション】所属グループ数は3個までとし、超えた場合登録不可とする
+        // To-Do 今後課金の仕組みを入れる場合にここを条件の1個とする
+        $userBelongGroups = GroupUser::where('user_id', '=', Auth::user()->id)->get();
+        if ($userBelongGroups->count() >= 3) {
+            return Redirect::back()
+                ->with('flash-message-error', '所属できるグループ数の上限に達しています');
+        }
         return view('group/create');
     }
 
@@ -47,6 +54,14 @@ class GroupController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        // 【バリデーション】所属グループ数は3個までとし、超えた場合登録不可とする
+        // To-Do 今後課金の仕組みを入れる場合にここを条件の1個とする
+        $userBelongGroups = GroupUser::where('user_id', '=', Auth::user()->id)->get();
+        if ($userBelongGroups->count() >= 3) {
+            return Redirect::back()
+                ->with('flash-message-error', 'グループの登録に失敗しました（所属できるグループ数の上限に達しています）');
+        }
+
         DB::beginTransaction();
         try {
             // [insert] グループテーブル
@@ -144,7 +159,15 @@ class GroupController extends Controller
         }
 
         // 招待されたアカウント取得
-        $invitaionUser = User::where('email', '=', $request->mail)->get();
+        $invitaionUser = User::where('email', '=', $request->mail)->get()->first();
+
+        // 【バリデーション】所属グループ数は3個までとし、超えた場合登録不可とする
+        // To-Do 今後課金の仕組みを入れる場合にここを条件の1個とする
+        $userBelongGroups = GroupUser::where('user_id', '=', $invitaionUser->id)->get();
+        if ($userBelongGroups->count() >= 3) {
+            return Redirect::back()
+                ->with('flash-message-error', 'グループへの追加に失敗しました（対象ユーザーは所属できるグループ数の上限に達しています）');
+        }
 
         // グループメンバーとして登録処理
         DB::beginTransaction();
@@ -152,7 +175,7 @@ class GroupController extends Controller
             // 中間テーブルへ登録
             $groupUser = new GroupUser();
             $groupUser->group_id = $group->id;
-            $groupUser->user_id = $invitaionUser->first()->id;
+            $groupUser->user_id = $invitaionUser->id;
             $groupUser->user_role_id = $request->userRole;
             $groupUser->save();
 
