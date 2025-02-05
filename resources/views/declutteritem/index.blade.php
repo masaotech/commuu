@@ -19,8 +19,7 @@
                     $date_1_week_later = $today->modify('+1 week')->format('Y-m-d');
                 @endphp
                 <x-input-label for="target_day">断捨離 判断日</x-input-label>
-                <x-text-input id="target_day" name="target_day" type="date"
-                    value="{{ $date_1_week_later }}" required />
+                <x-text-input id="target_day" name="target_day" type="date" value="{{ $date_1_week_later }}" required />
                 <x-form-select name="date_options" id="date_options">
                     <option value="{{ $date_1_week_later }}">1週間後</option>
                     <option value="{{ $today->modify('+2 week')->format('Y-m-d') }}">2週間後</option>
@@ -39,8 +38,7 @@
                     <div>
                         <x-primary-button type="button" id="file_choice_btn">画像を選択</x-primary-button>
                         <input id="input_file" type="file" name="file"
-                            class="new_item_image absolute bottom-0 left-4 w-3 opacity-0" capture="environment"
-                            accept="image/*" required>
+                            class="new_item_image absolute bottom-0 left-4 w-3 opacity-0" accept="image/*" required>
                     </div>
                     {{-- 画像プレビュー欄 --}}
                     <figure id="figure" style="display: none">
@@ -81,22 +79,36 @@
                             $diffDays = $diff->days;
                             if ($diffDays === 0) {
                                 // 当日(差分なし)の場合
-                                $diffMessage = '当日';
+                                $diffMessageConfirmAt = '当日';
                                 $isToday = true;
                                 $isFuture = false;
                                 $isExpired = false;
                             } elseif ($diff->invert === 0) {
                                 // 未来(差分がプラス)の場合
-                                $diffMessage = $diffDays . '日後';
+                                $diffMessageConfirmAt = $diffDays . '日後';
                                 $isToday = false;
                                 $isFuture = true;
                                 $isExpired = false;
                             } elseif ($diff->invert === 1) {
-                                // 未来(差分がマイナス)の場合
-                                $diffMessage = $diffDays . '日超過！';
+                                // 過去(差分がマイナス)の場合
+                                $diffMessageConfirmAt = $diffDays . '日超過！';
                                 $isToday = false;
                                 $isFuture = false;
                                 $isExpired = true;
+                            }
+
+                            // 日数差分取得（断捨離 登録日）
+                            $diff = $datetimeToday->diff($createdAt);
+                            $diffDays = $diff->days + 1;
+                            if ($diffDays === 0) {
+                                // 当日(差分なし)の場合
+                                $diffMessageCreatedAt = '';
+                            } elseif ($diff->invert === 0) {
+                                // 未来(差分がプラス)の場合
+                                $diffMessageCreatedAt = '';
+                            } elseif ($diff->invert === 1) {
+                                // 過去(差分がマイナス)の場合
+                                $diffMessageCreatedAt = $diffDays . '日前';
                             }
                         @endphp
 
@@ -105,14 +117,23 @@
                             {{ $disposalConfirmAt->format('Y/n/j') }}
                             <span @class([
                                 'ms-2',
-                                'font-black' => !$isFuture,
+                                'py-0',
+                                'px-2',
+                                'rounded-md',
+                                'font-bold',
                                 'text-blue-600' => $isToday,
                                 'text-red-600' => $isExpired,
-                            ])>{{ $diffMessage }}</span>
+                                'bg-gray-200' => $isFuture,
+                                'bg-blue-200' => $isToday,
+                                'bg-red-200' => $isExpired,
+                            ])>{{ $diffMessageConfirmAt }}</span>
                         </div>
 
                         <p class="text-xs font-bold text-gray-500 mt-2">登録日</p>
-                        <div class="ms-3">{{ $createdAt->format('Y/n/j') }}</div>
+                        <div class="ms-3">
+                            {{ $createdAt->format('Y/n/j') }}
+                            <span @class(['ms-2'])>{{ $diffMessageCreatedAt }}</span>
+                        </div>
 
                         {{-- 画像 --}}
                         @php
