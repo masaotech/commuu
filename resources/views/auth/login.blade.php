@@ -101,7 +101,7 @@
     </div>
     <div class="flex text-xs my-2 text-gray-500">
         <span class="me-1">※</span>
-        <span>ゲストユーザーのデータは30分毎にデモ用データに初期化しておりますので、ご自由に更新操作をお試しください</span>
+        <span>ゲストユーザーのデータは夜間バッチ処理にてデモ用データに初期化しておりますので、ご自由に更新操作をお試しください</span>
     </div>
     <div class="flex text-xs my-2 text-gray-500">
         <span class="me-1">※</span>

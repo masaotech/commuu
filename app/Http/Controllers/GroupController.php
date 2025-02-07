@@ -161,6 +161,11 @@ class GroupController extends Controller
         // 招待されたアカウント取得
         $invitaionUser = User::where('email', '=', $request->mail)->get()->first();
 
+        // 【バリデーション】ゲストユーザーが指定された場合エラー
+        if ($invitaionUser->id === 1 || $invitaionUser->id === 2 || $invitaionUser->id === 3) {
+            return Redirect::back()->with('flash-message-error', '対象ユーザーはゲストユーザーのため追加できません');
+        }
+
         // 【バリデーション】所属グループ数は3個までとし、超えた場合登録不可とする
         // To-Do 今後課金の仕組みを入れる場合にここを条件の1個とする
         $userBelongGroups = GroupUser::where('user_id', '=', $invitaionUser->id)->get();

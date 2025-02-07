@@ -69,7 +69,8 @@ class HabitItemController extends Controller
                 'c.cycle_type           as cycle_type',
             ])
             ->orderBy('cycle_id', 'asc')
-            ->orderBy('item_id', 'asc')
+            ->orderBy('monthly_start_day', 'asc')
+            ->orderBy('weekly_day_of_week', 'asc')
             ->get();
 
         $this->addToBag('habitCycles', $habitCycles);
@@ -165,7 +166,7 @@ class HabitItemController extends Controller
     /**
      * [private] 定例To-Doのスケジュール最新化（habit_schedulesテーブルの更新）
      */
-    private function updateHabitSchedules()
+    public function updateHabitSchedules()
     {
         $today = new DateTimeImmutable('today'); // 今日
         $deleteMaxDate = $today->modify('-3 day'); // 何日経過したスケジュールを削除するか

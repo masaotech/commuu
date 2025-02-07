@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 abstract class Controller
 {
     // コントローラー内で共通利用する連想配列（最終的にはViewへ渡す）
-    protected $commonBag = [];
+    public $commonBag = [];
 
     public function __construct()
     {
