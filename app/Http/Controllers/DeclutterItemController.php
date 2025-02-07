@@ -30,7 +30,7 @@ class DeclutterItemController extends Controller
     public function store(StoreRequest $request)
     {
         // 画像ファイルのリサイズ
-        $resizedFilePath = $this->resizeImage($request->file, 480, 480);
+        $resizedFilePath = $this->resizeImage($request->file, 256, 256);
 
         // ファイルをbase64でエンコード
         $encodedBase64Str = base64_encode(file_get_contents($resizedFilePath));
