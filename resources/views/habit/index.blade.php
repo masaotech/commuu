@@ -43,7 +43,7 @@
                                     'border-gray-300' => !$loop->first,
                                 ])>
                                     {{-- 済 / 未 --}}
-                                    <td>
+                                    <td class="min-w-12">
                                         <div class="flex justify-center items-center">
                                             @php
                                                 $isStamped =
@@ -117,7 +117,7 @@
                                     </td>
 
                                     {{-- ボタン --}}
-                                    <td>
+                                    <td class="min-w-24">
                                         <div class="flex justify-end items-center me-3">
                                             @if ($schedule->isComplete)
                                                 {{-- 実施済 ⇒ 未実施 に変更 --}}
