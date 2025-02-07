@@ -24,6 +24,7 @@ class ShoppingItemController extends Controller
         // 買い物リスト 情報取得
         $items = ShoppingItem::where('group_id', '=', $this->commonBag['userCurrentGroupId'])
             ->orderBy('item_category_id')
+            ->orderBy('id')
             ->get();
 
         $this->addToBag('items', $items);
@@ -38,6 +39,7 @@ class ShoppingItemController extends Controller
         // 買い物リスト 情報取得
         $items = ShoppingItem::where('group_id', '=', $this->commonBag['userCurrentGroupId'])
             ->orderBy('item_category_id')
+            ->orderBy('id')
             ->get();
 
         $this->addToBag('items', $items);
