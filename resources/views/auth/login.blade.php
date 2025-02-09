@@ -1,19 +1,28 @@
 <x-guest-layout>
-    <!-- Session Status -->
+    {{-- メタタグ --}}
+    <x-slot name="metaTags">
+        <meta name="keywords" content="Commuu,コミュー" />
+        <meta name="description" content="Commuu（コミュー）は家族やサークルメンバーなど、小規模なコミュニティ生活の中で発生する「ちょっとしたモヤモヤ」を未然に防ぐことをサポートします" />
+        <meta property="og:description"
+            content="Commuu（コミュー）は家族やサークルメンバーなど、小規模なコミュニティ生活の中で発生する「ちょっとしたモヤモヤ」を未然に防ぐことをサポートします" />
+        <meta property="og:site_name" content="Commuu 小規模集団の情報共有サービス" />
+    </x-slot>
+
+    {{-- Session Status --}}
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
-        <!-- Email Address -->
+        {{-- Email Address --}}
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
-                autofocus autocomplete="username" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
+                required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Password -->
+        {{-- Password --}}
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
 
@@ -23,7 +32,7 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <!-- Remember Me -->
+        {{-- Remember Me --}}
         <div class="mt-4">
             <label for="remember_me" class="inline-flex items-center">
                 <input id="remember_me" type="checkbox"
