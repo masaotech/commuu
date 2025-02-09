@@ -115,7 +115,8 @@ class HabitItemController extends Controller
 
         $this->updateHabitSchedules();
 
-        return Redirect::route('habititem.edit');
+        return Redirect::route('habititem.edit')
+            ->with('flash-message-info', '「'. $habitItem->name . '」　を登録しました');;
     }
 
     /**

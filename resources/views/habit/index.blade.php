@@ -189,6 +189,13 @@
                         {{ $schedules->onEachSide(2)->links() }}
                     </div>
                 @endif
+
+                {{-- 補足 --}}
+                <div class="mt-5">
+                    <p class="text-xs text-gray-600">※ 半年先までのタスクが自動で登録されます</p>
+                    <p class="text-xs text-gray-600">※ 未実施のタスクは残り続けます</p>
+                    <p class="text-xs text-gray-600">※ 実施済のタスクは3日経過すると表示されなくなります</p>
+                </div>
             </div>
         </div>
     @endif
